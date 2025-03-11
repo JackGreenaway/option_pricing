@@ -1,5 +1,5 @@
 fn normal_cdf(x: f64) -> f64 {
-    // approximation using Abramowitz and Stegun approximation
+    // Abramowitz and Stegun approximation
 
     const A1: f64 = 0.319381530;
     const A2: f64 = -0.356563782;
@@ -34,13 +34,13 @@ pub fn black_scholes(
     tte: f64,
     sigma: f64,
     option_type: i8,
-) -> Option<f64> {
+) -> f64 {
     let d1 = ((price / strike).ln() + (rfr + 0.5 * sigma.powi(2)) * tte) / (sigma * tte.sqrt());
     let d2 = d1 - sigma * tte.sqrt();
 
     match option_type {
-        -1 => Some(strike * (-rfr * tte).exp() * normal_cdf(-d2) - price * normal_cdf(-d1)), // put
-        1 => Some(price * normal_cdf(d1) - strike * (-rfr * tte).exp() * normal_cdf(d2)),    // call
-        _ => None, // invalid
+        -1 => strike * (-rfr * tte).exp() * normal_cdf(-d2) - price * normal_cdf(-d1), // put
+        1 => price * normal_cdf(d1) - strike * (-rfr * tte).exp() * normal_cdf(d2),    // call
+        _ => 0.0,                                                                      // invalid
     }
 }

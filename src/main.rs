@@ -16,9 +16,6 @@ fn main() {
             _ => "unkown",
         };
 
-        match option_price {
-            Some(option_price) => println!("{} price: {:.2}", option_type, option_price),
-            None => println!("error"),
-        }
+        println!("{} price: {:.2}", option_type, option_price)
     }
 }
